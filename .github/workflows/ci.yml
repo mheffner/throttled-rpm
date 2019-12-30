@@ -11,6 +11,7 @@ jobs:
         os_version: [ 29, 30, 31 ]
         os_type: [ fedora ]
         arch: [ x86_64 ]
+      fail-fast: false
     container:
       image: alectolytic/rpmbuilder:${{ matrix.os_type }}-${{ matrix.os_version }}
     steps:
@@ -27,7 +28,9 @@ jobs:
           SRPM_ONLY: 1
         run: /usr/bin/build
       - name: install deps
-        run: pip install copr-cli simplejson
+        run: |
+          pip install copr-cli simplejson configparser
+          yum install -y gpg
       - name: decrypt
         if: startsWith(github.event.ref, 'refs/tags/')
         env:
