@@ -29,7 +29,7 @@ jobs:
         run: /usr/bin/build
       - name: install deps
         run: |
-          pip install copr-cli simplejson
+          pip install copr-cli simplejson configparser
           yum install -y gpg
       - name: decrypt
         if: startsWith(github.event.ref, 'refs/tags/')
